@@ -1,2 +1,1 @@
-# vema.github.io
-VEMA
+# VEMA
