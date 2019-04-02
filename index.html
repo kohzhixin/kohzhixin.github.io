@@ -36,6 +36,7 @@
         </nav>
         <p id="p1">No selection</p>
         <button onclick="confirm()">Confirm</button>
+        <p id="p2"></p>
         <script>
             function select_gate(gate) {
                 document.getElementById("p1").innerHTML = "You have selected: Gate " + gate;
@@ -45,6 +46,7 @@
                     window.alert("Please select a gate")
                 } else {
                     window.alert("Gate " + document.getElementById("p1").innerHTML.charAt(24) + " confirmed")
+                    document.getElementById("p2").innerHTML = "Hang tight, we're on the way!"
                 }
             }
         </script>
