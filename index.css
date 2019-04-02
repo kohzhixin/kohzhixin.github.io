@@ -2,17 +2,3 @@
     background-color: aliceblue;
 }
 
-vertical-menu {
-    width: 200px;
-}
-
-vertical-menu a {
-    background-color: lightgray;
-    color: black;
-    display: block;
-    padding: 12px;
-}
-
-vertical-menu a:hover {
-    background-color: lightgreen;
-}
