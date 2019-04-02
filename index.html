@@ -35,10 +35,17 @@
             </ul>
         </nav>
         <p id="p1">No selection</p>
-        <button>Confirm</button>
+        <button onclick="confirm()">Confirm</button>
         <script>
             function select_gate(gate) {
                 document.getElementById("p1").innerHTML = "You have selected: Gate " + gate;
+            }
+            function confirm() {
+                if (document.getElementById("p1").innerHTML.endsWith("n")) {
+                    window.alert("Please select a gate")
+                } else {
+                    window.alert("Gate " + document.getElementById("p1").innerHTML.charAt(24) + " confirmed")
+                }
             }
         </script>
     </body>
