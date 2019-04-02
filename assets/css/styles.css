@@ -45,6 +45,12 @@ h1 {
     font: bold 70px 'Open Sans', sans-serif;
 }
 
+p {
+    color: darkslategray;
+    padding: 20px;
+    font: bold 18px 'Open Sans', sans-serif;
+}
+
 
 /*----------------------------
 	The Navigation Menu
