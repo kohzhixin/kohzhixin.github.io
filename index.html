@@ -67,7 +67,8 @@
                 var time = dt.toLocaleTimeString();
                 db.collection("gate").add({
                     gate: document.getElementById("p1").innerHTML.charAt(24),
-                    time: time
+                    time: time,
+                    time24: change_time(time)
                 })
                     .then(function (docRef) {
                         console.log("Document written with ID: ", docRef.id);
@@ -76,6 +77,23 @@
                         console.error("Error adding document: ", error);
                     });
             }
+        }
+        function change_time(time_string) {
+            var changed_string = "";
+            var ind = 0;
+            if (time_string.includes("PM")) {
+                console.log("afternoon")
+                ind = time_string.indexOf(":");
+                changed_string += (12 + parseInt(time_string.slice(0, ind + 1))).toString();
+            } else {
+                console.log("morning")
+                ind = time_string.indexOf(":");
+                changed_string += (parseInt(time_string.slice(0, ind + 1))).toString();
+            }
+            changed_string += ":"
+            changed_string += time_string.slice(ind + 1, ind + 3)
+            console.log(changed_string);
+            return changed_string;
         }
     </script>
 
