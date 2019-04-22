@@ -95,47 +95,61 @@ firebase.initializeApp(config);
 var db = firebase.firestore();
     </script>
     <script>
-                                    function select_gate(gate) {
-                            document.getElementById("p1").innerHTML = "You have selected: Gate " + gate;
-                        }
-                                                                                function confirm() {
-                                                                                    if (document.getElementById("p1").innerHTML.endsWith("n")) {
-                            window.alert("Please select a gate")
-                        } else {
-                            window.alert("Gate " + document.getElementById("p1").innerHTML.charAt(24) + " confirmed")
-                                                                                        document.getElementById("p2").innerHTML = "Hang tight, we're on the way!"
-                                                                                        var dt = new Date();
-                                                                                        var time = dt.toLocaleTimeString();
-                                                                                        db.collection("gate").add({
-                            gate: document.getElementById("p1").innerHTML.charAt(24),
-                                                                                            time: time,
-                                                                                            time24: change_time(time)
-                                                                                        })
-                                                                                            .then(function (docRef) {
-                            console.log("Document written with ID: ", docRef.id);
-                        })
-                                                                                            .catch(function (error) {
-                            console.error("Error adding document: ", error);
-                        });
-                                                                                    }
-                                                                                }
-                                                                                function change_time(time_string) {
-                                                                                    var changed_string = "";
-                                                                                    var ind = 0;
-                                                                                    if (time_string.includes("PM")) {
-                            console.log("afternoon")
-                                                                                        ind = time_string.indexOf(":");
-                                                                                        changed_string += (12 + parseInt(time_string.slice(0, ind + 1))).toString();
-                                                                                    } else {
-                            console.log("morning")
-                                                                                        ind = time_string.indexOf(":");
-                                                                                        changed_string += (parseInt(time_string.slice(0, ind + 1))).toString();
-                                                                                    }
-                                                                                    changed_string += ":"
-                                                                                    changed_string += time_string.slice(ind + 1, ind + 3)
-                                                                                    console.log(changed_string);
-                                                                                    return changed_string;
-                                                                                }
+        function create_array(x, y) {
+            var bigArray = new Array(y);
+            for (var i = 0; i < bigArray.length; i++) {
+                var smallArray = new Array(x);
+                for (var j = 0; j < smallArray.length; j++) {
+                    smallArray[j] = i;
+                }
+                bigArray[i] = smallArray;
+            }
+            return bigArray;
+        }
+        function select_gate(gate) {
+            document.getElementById("p1").innerHTML = "You have selected: Gate " + gate;
+            var emptyArray = create_array(7, 5);
+            var selectedArray = emptyArray[gate];
+            console.log(selectedArray);
+        }
+        function confirm() {
+            if (document.getElementById("p1").innerHTML.endsWith("n")) {
+                window.alert("Please select a gate");
+            } else {
+                window.alert("Gate " + document.getElementById("p1").innerHTML.charAt(24) + " confirmed");
+                document.getElementById("p2").innerHTML = "Hang tight, we're on the way!"
+                var dt = new Date();
+                var time = dt.toLocaleTimeString();
+                db.collection("gate").add({
+                    gate: document.getElementById("p1").innerHTML.charAt(24),
+                    time: time,
+                    time24: change_time(time)
+                })
+                .then(function (docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                })
+                .catch(function (error) {
+                    console.error("Error adding document: ", error);
+                });
+            }
+        }
+        function change_time(time_string) {
+            var changed_string = "";
+            var ind = 0;
+            if (time_string.includes("PM")) {
+                console.log("afternoon");
+                ind = time_string.indexOf(":");
+                changed_string += (12 + parseInt(time_string.slice(0, ind + 1))).toString();
+            } else {
+                console.log("morning");
+                ind = time_string.indexOf(":");
+                changed_string += (parseInt(time_string.slice(0, ind + 1))).toString();
+            }
+            changed_string += ":"
+            changed_string += time_string.slice(ind + 1, ind + 3)
+            console.log(changed_string);
+            return changed_string;
+        }
     </script>
 
     </body>
