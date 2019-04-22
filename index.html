@@ -17,29 +17,70 @@
     <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <!--<script type="text/javascript" src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+    <script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+    <script type="text/javascript" type="text/javascript">
+
+        var ros = new ROSLIB.Ros({ url: 'ws://localhost:9090' });
+
+        var vemaClient = new ROSLIB.ActionClient({
+            ros: ros,
+            serverName: '/vema_action_server',
+            actionName: 'idunnoman',
+        });
+
+        var vemagoal = new ROSLIB.Goal({
+            actionClient: vemaClient,
+            goalMessage: {
+                order: 7
+            }
+        })
+
+        vemagoal.on('feedback', function (feedback) {
+            console.log('Feedback: ' + feedback.sequence);
+        });
+
+        vemagoal.on('result', function (result) {
+            console.log('Final Result: ' + result.sequence);
+        });
+
+        ros.on('connection', function () {
+            console.log('Connected to websocket server.');
+        });
+        ros.on('error', function (error) {
+            console.log('Error connecting to websocket server: ', error);
+        });
+        ros.on('close', function () {
+            console.log('Connection to websocket server closed.');
+        });
+
+        vemagoal.publish();-->
 </head>
-    
-<body>
-    <h1>VEMA</h1>
-    <nav id="colorNav">
-        <ul>
-            <li class="red">
-                <a href="#">Which gate are you at?</a>
-                <ul>
-                    <li><a href="javascript:;" onclick="select_gate(1)">Gate 1</a></li>
-                    <li><a href="javascript:;" onclick="select_gate(2)">Gate 2</a></li>
-                    <li><a href="javascript:;" onclick="select_gate(3)">Gate 3</a></li>
-                    <li><a href="javascript:;" onclick="select_gate(4)">Gate 4</a></li>
-                    <li><a href="javascript:;" onclick="select_gate(5)">Gate 5</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-    <p id="p1">No selection</p>
-    <button onclick="confirm()">Confirm</button>
-    <p id="p2"></p>
-    <pre id='data'></pre>
-    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
+
+            <body>
+                <h1>VEMA</h1>
+                <nav id="colorNav">
+                    <ul>
+                        <li class="red">
+                            <a href="#">Which gate are you at?</a>
+                            <ul>
+                                <li><a href="javascript:;" onclick="select_gate(1)">Gate 1</a></li>
+                                <li><a href="javascript:;" onclick="select_gate(2)">Gate 2</a></li>
+                                <li><a href="javascript:;" onclick="select_gate(3)">Gate 3</a></li>
+                                <li><a href="javascript:;" onclick="select_gate(4)">Gate 4</a></li>
+                                <li><a href="javascript:;" onclick="select_gate(5)">Gate 5</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <p id="p1">No selection</p>
+                <button onclick="confirm()">Confirm</button>
+                <p id="p2"></p>
+                <pre id='data'></pre>
+                <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-firestore.js"></script>
     <script>
         // Initialize Firebase
@@ -47,55 +88,55 @@
         // Required for side-effects
         var config = {
             apiKey: "AIzaSyA8REddOuHBkuZHo7t8Ks9y59jblWRr0gM",
-            authDomain: "design-8d4ff.firebaseapp.com",
-            projectId: "design-8d4ff",
-        };
-        firebase.initializeApp(config);
-        var db = firebase.firestore();
+authDomain: "design-8d4ff.firebaseapp.com",
+projectId: "design-8d4ff",
+};
+firebase.initializeApp(config);
+var db = firebase.firestore();
     </script>
     <script>
-        function select_gate(gate) {
-            document.getElementById("p1").innerHTML = "You have selected: Gate " + gate;
-        }
-        function confirm() {
-            if (document.getElementById("p1").innerHTML.endsWith("n")) {
-                window.alert("Please select a gate")
-            } else {
-                window.alert("Gate " + document.getElementById("p1").innerHTML.charAt(24) + " confirmed")
-                document.getElementById("p2").innerHTML = "Hang tight, we're on the way!"
-                var dt = new Date();
-                var time = dt.toLocaleTimeString();
-                db.collection("gate").add({
-                    gate: document.getElementById("p1").innerHTML.charAt(24),
-                    time: time,
-                    time24: change_time(time)
-                })
-                    .then(function (docRef) {
-                        console.log("Document written with ID: ", docRef.id);
-                    })
-                    .catch(function (error) {
-                        console.error("Error adding document: ", error);
-                    });
-            }
-        }
-        function change_time(time_string) {
-            var changed_string = "";
-            var ind = 0;
-            if (time_string.includes("PM")) {
-                console.log("afternoon")
-                ind = time_string.indexOf(":");
-                changed_string += (12 + parseInt(time_string.slice(0, ind + 1))).toString();
-            } else {
-                console.log("morning")
-                ind = time_string.indexOf(":");
-                changed_string += (parseInt(time_string.slice(0, ind + 1))).toString();
-            }
-            changed_string += ":"
-            changed_string += time_string.slice(ind + 1, ind + 3)
-            console.log(changed_string);
-            return changed_string;
-        }
+                                    function select_gate(gate) {
+                            document.getElementById("p1").innerHTML = "You have selected: Gate " + gate;
+                        }
+                                                                                function confirm() {
+                                                                                    if (document.getElementById("p1").innerHTML.endsWith("n")) {
+                            window.alert("Please select a gate")
+                        } else {
+                            window.alert("Gate " + document.getElementById("p1").innerHTML.charAt(24) + " confirmed")
+                                                                                        document.getElementById("p2").innerHTML = "Hang tight, we're on the way!"
+                                                                                        var dt = new Date();
+                                                                                        var time = dt.toLocaleTimeString();
+                                                                                        db.collection("gate").add({
+                            gate: document.getElementById("p1").innerHTML.charAt(24),
+                                                                                            time: time,
+                                                                                            time24: change_time(time)
+                                                                                        })
+                                                                                            .then(function (docRef) {
+                            console.log("Document written with ID: ", docRef.id);
+                        })
+                                                                                            .catch(function (error) {
+                            console.error("Error adding document: ", error);
+                        });
+                                                                                    }
+                                                                                }
+                                                                                function change_time(time_string) {
+                                                                                    var changed_string = "";
+                                                                                    var ind = 0;
+                                                                                    if (time_string.includes("PM")) {
+                            console.log("afternoon")
+                                                                                        ind = time_string.indexOf(":");
+                                                                                        changed_string += (12 + parseInt(time_string.slice(0, ind + 1))).toString();
+                                                                                    } else {
+                            console.log("morning")
+                                                                                        ind = time_string.indexOf(":");
+                                                                                        changed_string += (parseInt(time_string.slice(0, ind + 1))).toString();
+                                                                                    }
+                                                                                    changed_string += ":"
+                                                                                    changed_string += time_string.slice(ind + 1, ind + 3)
+                                                                                    console.log(changed_string);
+                                                                                    return changed_string;
+                                                                                }
     </script>
 
-</body>
+    </body>
 </html>
