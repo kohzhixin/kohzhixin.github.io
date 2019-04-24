@@ -110,17 +110,6 @@
                 document.getElementById("p2").innerHTML = "Hang tight, we're on the way!"
                 var dt = new Date();
                 var time = dt.toLocaleTimeString();
-                db.collection("gate").add({
-                    gate: document.getElementById("p1").innerHTML.charAt(24),
-                    time: time,
-                    time24: change_time(time)
-                })
-                .then(function (docRef) {
-                    console.log("Document written with ID: ", docRef.id);
-                })
-                .catch(function (error) {
-                    console.error("Error adding document: ", error);
-                });
             }
         }
         function change_time(time_string) {
