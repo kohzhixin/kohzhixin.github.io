@@ -81,6 +81,10 @@ button:hover {
     background-color: #bc3861;
 }
 
+img {
+    max-width: 100%;
+}
+
 
 /*----------------------------
 	The Navigation Menu
