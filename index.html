@@ -82,7 +82,34 @@
         console.log('Connection to websocket server closed.');
     });
 
-    vemagoal.send();        
+        function sendGoal(x, y) {
+            var vemagoal = new ROSLIB.Goal({
+                actionClient: vemaClient,
+                goalMessage: {
+                    target_pose: {
+                        header: {
+                            frame_id: "map",
+                        },
+
+                        pose: {
+                            position: {
+                                x: x,
+                                y: y,
+                                z: 0,
+                            },
+                            orientation: {
+                                x: 0,
+                                y: 0,
+                                z: 0,
+                                w: 1,
+                            }
+                        }
+                    }
+                }
+            });
+            console.log(vemagoal);
+            vemagoal.send();
+        } 
     </script>
 </head>
 
@@ -132,7 +159,7 @@
             var emptyArray = create_array(7, 5);
             var selectedArray = emptyArray[gate];
             console.log(selectedArray);
-            
+            sendGoal(selectedArray[0], [1]);
         }
         function confirm() {
             if (document.getElementById("p1").innerHTML.endsWith("n")) {
