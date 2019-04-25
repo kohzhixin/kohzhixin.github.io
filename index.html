@@ -19,68 +19,69 @@
 
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
+    <script src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
     <script type="text/javascript" src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
     <script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
     <script type="text/javascript" type="text/javascript">
 
-        var ros = new ROSLIB.Ros({ url: 'ws://localhost:9090'});
+        var ros = new ROSLIB.Ros({ url: 'ws://localhost:9090' });
 
         var vemaClient = new ROSLIB.ActionClient({
             ros: ros,
             serverName: '/move_base',
             actionName: 'move_base_msgs/MoveBaseAction',
-            });
+        });
 
         var vemagoal = new ROSLIB.Goal({
             actionClient: vemaClient,
             goalMessage: {
-                target_pose:{
-                    header:{
+                target_pose: {
+                    header: {
                         frame_id: "map",
                     },
 
-                    pose:{
-                        position:{
-                            x : 1,
-                            y : 0,
-                            z : 0,
+                    pose: {
+                        position: {
+                            x: 1,
+                            y: 0,
+                            z: 0,
                         },
-                        orientation:{
-                            x : 0,
-                            y : 0,
-                            z : 0,
-                            w : 1,
+                        orientation: {
+                            x: 0,
+                            y: 0,
+                            z: 0,
+                            w: 1,
                         }
                     }
                 }
             }
         });
 
-    console.log(vemagoal);
+        console.log(vemagoal);
 
-    vemagoal.on('feedback', function (feedback) {
-        console.log('Feedback: ' + feedback.sequence);
-    });
-
-    vemagoal.on('result', function (result) {
-        console.log('Final Result: ' + result.sequence);
-    });
-
-    vemagoal.on('status', function (status) {
-        console.log('Status: ' + status.sequence) ;
-    });
-
-    ros.on('connection', function () {
-        console.log('Connected to websocket server.');
+        vemagoal.on('feedback', function (feedback) {
+            console.log('Feedback: ' + feedback.sequence);
         });
 
-    ros.on('error', function (error) {
-        console.log('Error connecting to websocket server: ', error);
+        vemagoal.on('result', function (result) {
+            console.log('Final Result: ' + result.sequence);
         });
 
-    ros.on('close', function () {
-        console.log('Connection to websocket server closed.');
-    });
+        vemagoal.on('status', function (status) {
+            console.log('Status: ' + status.sequence);
+        });
+
+        ros.on('connection', function () {
+            console.log('Connected to websocket server.');
+        });
+
+        ros.on('error', function (error) {
+            console.log('Error connecting to websocket server: ', error);
+        });
+
+        ros.on('close', function () {
+            console.log('Connection to websocket server closed.');
+        });
 
         function sendGoal(x, y) {
             var vemagoal = new ROSLIB.Goal({
@@ -109,7 +110,7 @@
             });
             console.log(vemagoal);
             vemagoal.send();
-        } 
+        }
     </script>
 </head>
 
