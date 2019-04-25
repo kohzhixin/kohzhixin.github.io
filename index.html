@@ -160,10 +160,6 @@
         }
         function select_gate(gate) {
             document.getElementById("p1").innerHTML = "You have selected: Gate " + gate;
-            var emptyArray = create_array(7, 5);
-            var selectedArray = emptyArray[gate];
-            console.log(selectedArray);
-            sendGoal(selectedArray[0], [1]);
         }
         function confirm() {
             if (document.getElementById("p1").innerHTML.endsWith("n")) {
@@ -171,8 +167,11 @@
             } else {
                 window.alert("Gate " + document.getElementById("p1").innerHTML.charAt(24) + " confirmed");
                 document.getElementById("p2").innerHTML = "Hang tight, we're on the way!"
-                var dt = new Date();
-                var time = dt.toLocaleTimeString();
+                var gate = parseInt(document.getElementById("p1").innerHTML.charAt(24))
+                var emptyArray = create_array(7, 5);
+                var selectedArray = emptyArray[gate];
+                console.log(selectedArray);
+                sendGoal(selectedArray[0], [1]);
             }
         }
         function change_time(time_string) {
